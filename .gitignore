@@ -93,4 +93,4 @@ hs_err_pid*
 .gradle/
 build/
 out/
-config.properties
+TwitterSecrets.kt

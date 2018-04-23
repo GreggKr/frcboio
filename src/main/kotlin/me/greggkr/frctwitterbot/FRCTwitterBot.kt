@@ -1,11 +1,7 @@
 package me.greggkr.frctwitterbot
 
-import com.natpryce.konfig.ConfigurationProperties
-import twitter4j.Twitter
 import twitter4j.TwitterFactory
-import twitter4j.conf.Configuration
 import twitter4j.conf.ConfigurationBuilder
-import java.io.File
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -14,12 +10,11 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class FRCTwitterBot {
-    private val config = ConfigurationProperties.fromFile(File("config.properties"))
     private val twitterConfig = ConfigurationBuilder()
-            .setOAuthConsumerKey(config[Config.Twitter.Consumer.key])
-            .setOAuthConsumerSecret(config[Config.Twitter.Consumer.secret])
-            .setOAuthAccessToken(config[Config.Twitter.Access.token])
-            .setOAuthAccessTokenSecret(config[Config.Twitter.Access.secret])
+            .setOAuthConsumerKey(CONSUMER_KEY)
+            .setOAuthConsumerSecret(CONSUMER_SECRET)
+            .setOAuthAccessToken(ACCESS_TOKEN)
+            .setOAuthAccessTokenSecret(ACCESS_TOKEN_SECRET)
             .build()
 
     private val twitter = TwitterFactory(twitterConfig).instance
