@@ -18,5 +18,5 @@ fun getRandomFlavorText(team: TeamInfo): String {
     }
 
     val rawText = flavorTexts.get((Math.random() * flavorTexts.size).toInt())
-    return rawText.replace(teamAcct, "@${team.twitter}").replace(time, "${team.hour}${team.minute}")
+    return rawText.replace(teamAcct, "@${team.twitter}").replace(time, "${team.hour}:${team.minute}")
 }
