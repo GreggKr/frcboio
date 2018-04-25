@@ -35,7 +35,7 @@ class FRCTwitterBot {
             val hour = info.hour
             val min = info.minute
             scheduler.scheduleAtFixedRate({
-                twitter.updateStatus("@${info.twitter}, it is $hour:$min")
+                twitter.updateStatus(getRandomFlavorText(info))
                 println("[${team.key}] updated status")
             }, getDelay(hour, min), 12 * 60 * 60, TimeUnit.SECONDS)
         }
