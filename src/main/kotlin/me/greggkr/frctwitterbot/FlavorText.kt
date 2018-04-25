@@ -3,7 +3,7 @@ package me.greggkr.frctwitterbot
 const val teamAcct = "TWITTER_HANDLE"
 const val time = "TIME_STRING"
 
-var flavorTexts: ArrayList<String> = ArrayList()
+val flavorTexts: ArrayList<String> = ArrayList()
 
 fun getRandomFlavorText(team: TeamInfo): String {
     if (flavorTexts.isEmpty()) {

@@ -22,8 +22,15 @@ class FRCTwitterBot {
     private val teams = HashMap<Int, TeamInfo>()
 
     init {
+        teams[111] = TeamInfo("111wildstang", 1, 11)
         teams[118] = TeamInfo("Robonauts118", 1, 18)
+        teams[148] = TeamInfo("Robowranglers", 1, 48)
+        teams[217] = TeamInfo("tc_217", 2, 17)
         teams[254] = TeamInfo("team254", 2, 54)
+        teams[330] = TeamInfo("330_beachbots", 3, 30)
+        teams[359] = TeamInfo("thehawaiiankids", 3, 59)
+        teams[624] = TeamInfo("frc624", 6, 24)
+        teams[1114] = TeamInfo("frc1114", 11, 14)
     }
 
     fun run() {
