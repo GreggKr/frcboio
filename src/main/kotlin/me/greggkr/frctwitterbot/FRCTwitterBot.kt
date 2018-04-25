@@ -11,10 +11,10 @@ import java.util.concurrent.TimeUnit
 
 class FRCTwitterBot {
     private val twitterConfig = ConfigurationBuilder()
-            .setOAuthConsumerKey(CONSUMER_KEY)
-            .setOAuthConsumerSecret(CONSUMER_SECRET)
-            .setOAuthAccessToken(ACCESS_TOKEN)
-            .setOAuthAccessTokenSecret(ACCESS_TOKEN_SECRET)
+            .setOAuthConsumerKey(TWITTER_CONSUMER_KEY)
+            .setOAuthConsumerSecret(TWITTER_CONSUMER_SECRET)
+            .setOAuthAccessToken(TWITTER_ACCESS_TOKEN)
+            .setOAuthAccessTokenSecret(TWITTER_ACCESS_TOKEN_SECRET)
             .build()
 
     private val twitter = TwitterFactory(twitterConfig).instance

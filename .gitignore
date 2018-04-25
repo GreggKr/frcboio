@@ -59,7 +59,7 @@ fabric.properties
 # Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
 
 *.iml
-modules.xml
+modules.xmlTwitterSecrets
 .idea/misc.xml
 *.ipr
 
@@ -93,4 +93,4 @@ hs_err_pid*
 .gradle/
 build/
 out/
-TwitterSecrets.kt
+Secrets.kt
