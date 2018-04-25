@@ -5,7 +5,6 @@ import twitter4j.conf.ConfigurationBuilder
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.ZonedDateTime
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
@@ -18,7 +17,7 @@ Example: GMT_M_6_00 = GMT-6:00
 
 
  */
-private const val GMT_M_8_00 = "PST"
+private const val GMT_M_8_00 = "US/Pacific"
 private const val GMT_M_6_00 = "America/Chicago"
 private const val GMT_M_4_00 = "US/Michigan"
 private const val GMT_M_10_00 = "Pacific/Honolulu"
@@ -50,36 +49,37 @@ class FRCTwitterBot {
     fun run() {
         println("starting tweeting service")
 
-        for (team in teams) {
-            val info = team.value
+        teams.forEach {
+            val info = it.value
 
             val hour = info.hour
             val min = info.minute
             scheduler.scheduleAtFixedRate({
                 twitter.updateStatus(getRandomFlavorText(info))
-                println("[${team.key}] updated status")
+                println("[${it.key}] updated status")
             }, getDelay(hour, min, timezone = info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
         }
     }
 
     private fun getDelay(hour: Int, min: Int, sec: Int = 0, timezone: String): Long {
-        val now = LocalDateTime.now()
         val zone = try {
             ZoneId.of(timezone)
         } catch (e: Exception) {
+            println("Failed for timezone of $timezone")
             ZoneId.of(GMT_M_6_00)
         }
 
-        val zonedNow = ZonedDateTime.of(now, zone)
-        var next = zonedNow
+
+        val now = LocalDateTime.now(zone)
+
+        var next = now
                 .withHour(hour)
                 .withMinute(min)
                 .withSecond(sec)
 
-        if (zonedNow > next) next = next.plusDays(1)
+        if (now > next) next = next.plusDays(1)
 
-        val dir = Duration.between(zonedNow, next)
-
+        val dir = Duration.between(now, next)
         return dir.seconds
     }
 }
