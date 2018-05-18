@@ -42,6 +42,7 @@ class FRCTwitterBot {
         teams[254] = TeamInfo("team254", 2, 54, GMT_M_8_00)
         teams[330] = TeamInfo("330_beachbots", 3, 30, GMT_M_8_00)
         teams[359] = TeamInfo("thehawaiiankids", 3, 59, GMT_M_10_00)
+        teams[441] = TeamInfo("fake441", 4, 41)
         teams[624] = TeamInfo("frc624", 6, 24)
         teams[1114] = TeamInfo("frc1114", 11, 14, GMT_M_4_00)
     }
@@ -56,7 +57,6 @@ class FRCTwitterBot {
             val min = info.minute
             scheduler.scheduleAtFixedRate({
                 twitter.updateStatus(getRandomFlavorText(info))
-                println("[${it.key}] updated status")
             }, getDelay(hour, min, timezone = info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
         }
     }
