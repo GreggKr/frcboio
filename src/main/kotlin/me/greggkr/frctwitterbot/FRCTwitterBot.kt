@@ -1,10 +1,15 @@
 package me.greggkr.frctwitterbot
 
+import org.apache.commons.io.FileUtils
+import twitter4j.StatusUpdate
 import twitter4j.TwitterFactory
 import twitter4j.conf.ConfigurationBuilder
+import java.io.File
+import java.net.URL
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
@@ -36,7 +41,10 @@ class FRCTwitterBot {
 
     init {
         teams[111] = TeamInfo("111wildstang", 1, 11)
-        teams[118] = TeamInfo("Robonauts118", 1, 18)
+        teams[118] = TeamInfo("Robonauts118", 1, 18, images = arrayOf(
+                "https://i.ytimg.com/vi/RQNCeHsOeJE/maxresdefault.jpg",
+                "https://i.ytimg.com/vi/0fRt6sdKN7Y/maxresdefault.jpg"
+        ))
         teams[148] = TeamInfo("Robowranglers", 1, 48)
         teams[217] = TeamInfo("tc_217", 2, 17, GMT_M_4_00)
         teams[254] = TeamInfo("team254", 2, 54, GMT_M_8_00)
@@ -56,9 +64,32 @@ class FRCTwitterBot {
             val hour = info.hour
             val min = info.minute
             scheduler.scheduleAtFixedRate({
-                twitter.updateStatus(getRandomFlavorText(info))
+                val status = StatusUpdate(getRandomFlavorText(info))
+
+                val image = getRandomImage(Pair(it.key, info))
+
+                if (image == null) {
+                    println("Failed to get image for team ${it.key}")
+                } else {
+                    status.setMedia(image)
+                }
+
+                val update = twitter.updateStatus(status)
+//                val status = twitter.updateStatus(getRandomFlavorText(info))
+                twitter.createFavorite(update.id)
             }, getDelay(hour, min, timezone = info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
         }
+    }
+
+    private fun getRandomImage(team: Pair<Int, TeamInfo>): File? {
+        val images = team.second.images
+        if (images == null || images.isEmpty()) return null
+
+        val image = images[Random().nextInt(images.size)]
+        val file = File("img/twitter/${team.first}.jpg")
+
+        FileUtils.copyURLToFile(URL(image), file)
+        return file
     }
 
     private fun getDelay(hour: Int, min: Int, sec: Int = 0, timezone: String): Long {
