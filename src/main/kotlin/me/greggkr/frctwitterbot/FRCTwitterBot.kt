@@ -16,9 +16,10 @@ import java.util.concurrent.TimeUnit
 /*
 
 Timezone constants.
-Format: GMT_M/_HOUR_MIN
+Format: GMT_M/P_HOUR_MIN
 
-Example: GMT_M_6_00 = GMT-6:00
+Examples: GMT_M_6_00 = GMT-6:00
+          GMT_P_6_00 = GMT+6:00
 
 
  */
