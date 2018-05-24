@@ -126,10 +126,14 @@ class FRCTwitterBot {
                     println("Failed to get image for team ${it.key}")
                 } else {
                     status.setMedia(image)
+
+                    // Possible fix to stopping of reposting of images?
+                    scheduler.schedule({
+                        image.delete()
+                    }, 1, TimeUnit.MINUTES)
                 }
 
                 val update = twitter.updateStatus(status)
-//                val status = twitter.updateStatus(getRandomFlavorText(info))
                 twitter.createFavorite(update.id)
             }, getDelay(hour, min, timezone = info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
         }
@@ -140,7 +144,7 @@ class FRCTwitterBot {
         if (images == null || images.isEmpty()) return null
 
         val image = images[Random().nextInt(images.size)]
-        val file = File("img/twitter/${team.first}.jpg")
+        val file = File("img/twitter/${team.first}-${UUID.randomUUID()}.jpg")
 
         FileUtils.copyURLToFile(URL(image), file)
         return file
