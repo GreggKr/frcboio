@@ -70,11 +70,11 @@ class FRCTwitterBot {
                 "http://farm4.static.flickr.com/3120/2493098131_1edd8eec91.jpg"
         ))
         teams[254] = TeamInfo("team254", 2, 54, GMT_M_8_00, arrayOf(
-                "https://media.team254.com/2018/03/8f0007ab-lockdown-forklifts-up-300.jpg",
-                "https://media.team254.com/web/shockwave1.jpg",
-                "https://media.team254.com/2016/03/947007bd-dropshot1.jpg",
-                "https://media.team254.com/2014/02/965f07d3-DSC_5139.jpg",
-                "https://media.team254.com/2012/08/2006-robot.jpg"
+                "https://i.imgur.com/oRcMKDA.jpg",
+                "https://i.imgur.com/dynbBAM.jpg",
+                "https://i.imgur.com/lqN0duh.jpg",
+                "https://i.imgur.com/Gi8Jhyj.jpg",
+                "https://i.imgur.com/5dSNA7S.jpg"
         ))
         teams[330] = TeamInfo("330_beachbots", 3, 30, GMT_M_8_00, arrayOf(
                 "https://i.ytimg.com/vi/irP_K4utKgQ/maxresdefault.jpg",
