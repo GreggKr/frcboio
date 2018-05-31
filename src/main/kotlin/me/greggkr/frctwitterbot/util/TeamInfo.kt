@@ -1,4 +1,4 @@
-package me.greggkr.frctwitterbot
+package me.greggkr.frctwitterbot.util
 
 import java.util.*
 

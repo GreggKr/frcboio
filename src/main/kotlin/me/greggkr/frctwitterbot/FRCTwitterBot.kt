@@ -1,5 +1,6 @@
 package me.greggkr.frctwitterbot
 
+import me.greggkr.frctwitterbot.util.*
 import org.apache.commons.io.FileUtils
 import twitter4j.StatusUpdate
 import twitter4j.TwitterFactory
@@ -41,6 +42,16 @@ class FRCTwitterBot {
     private val teams = HashMap<Int, TeamInfo>()
 
     init {
+        twitter.onRateLimitReached {
+            twitter.sendDirectMessage(OWNER, "RL Status Recieved:\n" +
+                    "Account Rate Limited?: ${it.isAccountRateLimitStatus}\n" +
+                    "Remaining: ${it.rateLimitStatus.remaining}")
+        }
+        twitter.onRateLimitStatus {
+            twitter.sendDirectMessage(OWNER, "RLed.\n" +
+                    "Reset In: ${it.rateLimitStatus.resetTimeInSeconds}s")
+        }
+
         teams[111] = TeamInfo("111wildstang", 1, 11, images = arrayOf(
                 "https://i.ytimg.com/vi/ko9g-hTs4VE/maxresdefault.jpg",
                 "https://www.chiefdelphi.com/media/img/9eb/9eb5e39ea29029df55dd709a83168f06_l.jpg",
@@ -114,6 +125,7 @@ class FRCTwitterBot {
                 "https://i.pinimg.com/474x/8f/a6/4c/8fa64c84650d118258ea7cf748f3d58b--robotics-fame.jpg",
                 "https://i.imgur.com/tLyD2Vbh.jpg"
         ))
+
     }
 
     fun run() {
@@ -142,8 +154,12 @@ class FRCTwitterBot {
 
                 val update = twitter.updateStatus(status)
                 twitter.createFavorite(update.id)
+
+                twitter.sendDirectMessage(OWNER, "Sent Tweet for ${it.key}")
             }, getDelay(hour, min, timezone = info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
         }
+
+        twitter.sendDirectMessage(OWNER, "Started Tweeting Service")
     }
 
     private fun getRandomImage(team: Pair<Int, TeamInfo>): File? {
