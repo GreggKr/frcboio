@@ -2,12 +2,13 @@ package me.greggkr.frctwitterbot
 
 import me.greggkr.frctwitterbot.handler.DMHandler
 import me.greggkr.frctwitterbot.util.*
-import org.apache.commons.io.FileUtils
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import twitter4j.StatusUpdate
 import twitter4j.TwitterFactory
 import twitter4j.conf.ConfigurationBuilder
 import java.io.File
-import java.net.URL
+import java.io.FileOutputStream
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -43,6 +44,15 @@ class FRCTwitterBot {
     private val teams = HashMap<Int, TeamInfo>()
 
     private val dmHandler = DMHandler(twitter)
+
+    private val httpClient = OkHttpClient.Builder()
+            .addInterceptor {
+                it.proceed(it.request()
+                        .newBuilder()
+                        .addHeader("User-Agent", "Dillo/2.0")
+                        .build())
+            }
+            .build()
 
     init {
         teams[111] = TeamInfo("111wildstang", 1, 11, images = arrayOf(
@@ -161,7 +171,16 @@ class FRCTwitterBot {
         val image = images[Random().nextInt(images.size)]
         val file = File("img/twitter/${team.first}-${UUID.randomUUID()}.jpg")
 
-        FileUtils.copyURLToFile(URL(image), file)
+        val req = Request.Builder()
+                .url(image)
+                .build()
+
+        val res = httpClient.newCall(req).execute()
+
+        val fos = FileOutputStream(file)
+        fos.write(res.body()?.bytes() ?: return null)
+        fos.close()
+
         return file
     }
 
