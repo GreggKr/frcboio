@@ -93,5 +93,5 @@ hs_err_pid*
 .gradle/
 build/
 out/
-Secrets.kt
+config.properties
 .idea/

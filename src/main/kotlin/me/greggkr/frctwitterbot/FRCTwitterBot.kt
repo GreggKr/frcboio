@@ -1,7 +1,10 @@
 package me.greggkr.frctwitterbot
 
+import com.natpryce.konfig.ConfigurationProperties
 import me.greggkr.frctwitterbot.handler.DMHandler
-import me.greggkr.frctwitterbot.util.*
+import me.greggkr.frctwitterbot.util.Config
+import me.greggkr.frctwitterbot.util.TeamInfo
+import me.greggkr.frctwitterbot.util.getRandomFlavorText
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import twitter4j.StatusUpdate
@@ -32,18 +35,20 @@ private const val GMT_M_4_00 = "US/Michigan"
 private const val GMT_M_10_00 = "Pacific/Honolulu"
 
 class FRCTwitterBot {
+    val config = ConfigurationProperties.fromFile(File("config.properties"))
+
     private val twitterConfig = ConfigurationBuilder()
-            .setOAuthConsumerKey(TWITTER_CONSUMER_KEY)
-            .setOAuthConsumerSecret(TWITTER_CONSUMER_SECRET)
-            .setOAuthAccessToken(TWITTER_ACCESS_TOKEN)
-            .setOAuthAccessTokenSecret(TWITTER_ACCESS_TOKEN_SECRET)
+            .setOAuthConsumerKey(config[Config.Twitter.consumerkey])
+            .setOAuthConsumerSecret(config[Config.Twitter.consumersecret])
+            .setOAuthAccessToken(config[Config.Twitter.accesstoken])
+            .setOAuthAccessTokenSecret(config[Config.Twitter.accesstokensecret])
             .build()
 
     private val twitter = TwitterFactory(twitterConfig).instance
     private val scheduler = Executors.newSingleThreadScheduledExecutor()
     private val teams = HashMap<Int, TeamInfo>()
 
-    private val dmHandler = DMHandler(twitter)
+    private val dmHandler = DMHandler(twitter, config[Config.Bot.owner])
 
     private val httpClient = OkHttpClient.Builder()
             .addInterceptor {
@@ -157,7 +162,7 @@ class FRCTwitterBot {
                 val update = twitter.updateStatus(status)
                 twitter.createFavorite(update.id)
 
-                twitter.sendDirectMessage(OWNER, "Sent Tweet for ${it.key}")
+                twitter.sendDirectMessage(config[Config.Bot.owner], "Sent Tweet for ${it.key}")
             }, getDelay(hour, min, timezone = info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
         }
 

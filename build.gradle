@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.2.41'
+    ext.kotlin_version = '1.2.50'
 
     repositories {
         mavenCentral()
@@ -26,6 +26,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     compile 'org.twitter4j:twitter4j-core:4.0.4'
+    compile 'com.natpryce:konfig:1.6.9.0'
     compile 'org.slf4j:slf4j-api:1.7.25'
 
     compile 'ch.qos.logback:logback-core:1.2.3'

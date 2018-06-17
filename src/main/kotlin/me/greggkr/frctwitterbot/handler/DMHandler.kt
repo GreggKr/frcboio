@@ -2,7 +2,6 @@ package me.greggkr.frctwitterbot.handler
 
 import com.google.gson.GsonBuilder
 import me.greggkr.frctwitterbot.util.HttpUtil
-import me.greggkr.frctwitterbot.util.OWNER
 import org.json.JSONObject
 import twitter4j.DirectMessage
 import twitter4j.ResponseList
@@ -13,7 +12,7 @@ import java.util.concurrent.TimeUnit
 private const val STATS_DUMP = "stats"
 
 // TODO: Use Paging
-class DMHandler(private val twitter: Twitter) {
+class DMHandler(private val twitter: Twitter, private val owner: String) {
     private lateinit var lastDMs: ResponseList<DirectMessage>
 
     private val gson = GsonBuilder().setPrettyPrinting().create()
@@ -31,7 +30,7 @@ class DMHandler(private val twitter: Twitter) {
 
                     for (dm in new) {
                         println(dm.sender.screenName)
-                        if (dm.sender.screenName == OWNER) {
+                        if (dm.sender.screenName == owner) {
                             val text = dm.text
 
                             if (text.toLowerCase().contains(STATS_DUMP)) {
@@ -40,7 +39,7 @@ class DMHandler(private val twitter: Twitter) {
 
                                 val prettyJson = HttpUtil.hastebin(gson.toJson(json))
 
-                                twitter.sendDirectMessage(OWNER, "FRC Boio statistics: $prettyJson")
+                                twitter.sendDirectMessage(owner, "FRC Boio statistics: $prettyJson")
                             }
                         }
                     }
