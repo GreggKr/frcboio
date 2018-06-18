@@ -113,6 +113,13 @@ class FRCTwitterBot {
                 "https://i.ytimg.com/vi/D-UxSqM9kW8/hqdefault.jpg",
                 "https://i.ytimg.com/vi/OA7dbcxgesk/hqdefault.jpg"
         ))
+        teams[449] = TeamInfo("FRCteam449", 4, 49, images = arrayOf(
+                "https://i.imgur.com/zXwTpD7.jpg",
+                "https://i.imgur.com/4QsOLhR.jpg",
+                "https://i.imgur.com/LkxxOLN.jpg",
+                "https://i.imgur.com/0edJv5j.jpg",
+                "https://i.imgur.com/ql37fL9.jpg"
+        ))
         teams[624] = TeamInfo("frc624", 6, 24, images = arrayOf(
                 "http://team624.org/images/slideshow/BrimstoneSlide.jpg",
                 "http://dev.team624.org/images/slideshow/offseason-slide.jpg",
