@@ -31,6 +31,7 @@ Examples: GMT_M_6_00 = GMT-6:00
  */
 private const val GMT_M_8_00 = "US/Pacific"
 private const val GMT_M_6_00 = "America/Chicago"
+private const val GMT_M_5_00 = "America/Indianapolis"
 private const val GMT_M_4_00 = "US/Michigan"
 private const val GMT_M_10_00 = "Pacific/Honolulu"
 
@@ -113,7 +114,7 @@ class FRCTwitterBot {
                 "https://i.ytimg.com/vi/D-UxSqM9kW8/hqdefault.jpg",
                 "https://i.ytimg.com/vi/OA7dbcxgesk/hqdefault.jpg"
         ))
-        teams[449] = TeamInfo("FRCteam449", 4, 49, images = arrayOf(
+        teams[449] = TeamInfo("FRCteam449", 4, 49, GMT_M_5_00, arrayOf(
                 "https://i.imgur.com/zXwTpD7.jpg",
                 "https://i.imgur.com/4QsOLhR.jpg",
                 "https://i.imgur.com/LkxxOLN.jpg",
