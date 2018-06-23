@@ -1,6 +1,7 @@
 package me.greggkr.frctwitterbot.handler
 
 import com.google.gson.GsonBuilder
+import me.greggkr.frctwitterbot.dmBotOwner
 import me.greggkr.frctwitterbot.util.HttpUtil
 import org.json.JSONObject
 import twitter4j.DirectMessage
@@ -33,13 +34,15 @@ class DMHandler(private val twitter: Twitter, private val owner: String) {
                         if (dm.sender.screenName == owner) {
                             val text = dm.text
 
-                            if (text.toLowerCase().contains(STATS_DUMP)) {
-                                val json = JSONObject()
-                                        .put("OS", "test")
+                            when (text.toLowerCase()) {
+                                STATS_DUMP -> {
+                                    val json = JSONObject()
+                                            .put("OS", "test")
 
-                                val prettyJson = HttpUtil.hastebin(gson.toJson(json))
+                                    val prettyJson = HttpUtil.hastebin(gson.toJson(json))
 
-                                twitter.sendDirectMessage(owner, "FRC Boio statistics: $prettyJson")
+                                    twitter.dmBotOwner("FRC Boio statistics: $prettyJson")
+                                }
                             }
                         }
                     }

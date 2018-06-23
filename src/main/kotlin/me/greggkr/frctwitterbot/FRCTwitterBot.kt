@@ -7,7 +7,9 @@ import me.greggkr.frctwitterbot.util.TeamInfo
 import me.greggkr.frctwitterbot.util.getRandomFlavorText
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.slf4j.LoggerFactory
 import twitter4j.StatusUpdate
+import twitter4j.Twitter
 import twitter4j.TwitterFactory
 import twitter4j.conf.ConfigurationBuilder
 import java.io.File
@@ -35,8 +37,10 @@ private const val GMT_M_5_00 = "America/Indianapolis"
 private const val GMT_M_4_00 = "US/Michigan"
 private const val GMT_M_10_00 = "Pacific/Honolulu"
 
+val config = ConfigurationProperties.fromFile(File("config.properties"))
+
 class FRCTwitterBot {
-    val config = ConfigurationProperties.fromFile(File("config.properties"))
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
     private val twitterConfig = ConfigurationBuilder()
             .setOAuthConsumerKey(config[Config.Twitter.consumerkey])
@@ -143,8 +147,8 @@ class FRCTwitterBot {
         ))
     }
 
-    fun run() {
-        println("Starting Tweeting Service")
+    fun start() {
+        info("Setting up schedulers...")
 
         teams.forEach {
             val info = it.value
@@ -170,16 +174,19 @@ class FRCTwitterBot {
                 val update = twitter.updateStatus(status)
                 twitter.createFavorite(update.id)
 
-                twitter.sendDirectMessage(config[Config.Bot.owner], "Sent Tweet for ${it.key}")
+                twitter.dmBotOwner("Sent Tweet for ${it.key}")
+                info("Sent Tweet for ${it.key}")
             }, getDelay(hour, min, timezone = info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
         }
+        info("Finished setting up schedulers")
 
         dmHandler.start()
+        info("Started DM handler")
     }
 
     private fun getRandomImage(team: Pair<Int, TeamInfo>): File? {
-        val images = team.second.images
-        if (images == null || images.isEmpty()) return null
+        val images = team.second.images ?: return null
+        if (images.isEmpty()) return null
 
         val image = images[Random().nextInt(images.size)]
         val file = File("img/twitter/${team.first}-${UUID.randomUUID()}.jpg")
@@ -205,7 +212,6 @@ class FRCTwitterBot {
             ZoneId.of(GMT_M_6_00)
         }
 
-
         val now = LocalDateTime.now(zone)
 
         var next = now
@@ -218,8 +224,17 @@ class FRCTwitterBot {
         val dir = Duration.between(now, next)
         return dir.seconds
     }
+
+    private fun info(msg: String) {
+        println(msg)
+        logger.info(msg)
+    }
+}
+
+fun Twitter.dmBotOwner(msg: String) {
+    this.sendDirectMessage(config[Config.Bot.owner], msg)
 }
 
 fun Array<String>.main() {
-    FRCTwitterBot().run()
+    FRCTwitterBot().start()
 }

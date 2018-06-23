@@ -10,6 +10,7 @@ private const val URL = "https://hastebin.com"
 
 object HttpUtil {
     private val httpClient = OkHttpClient.Builder().build()
+
     fun hastebin(text: String): String? {
         val data = httpClient.newCall(
                 Request.Builder()
