@@ -13,9 +13,9 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
 
-        <encoer>
+        <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] [%file:%line] %-5level %logger{36} - %msg%n</pattern>
-        </encoer>
+        </encoder>
     </appender>
 
     <root level="INFO">

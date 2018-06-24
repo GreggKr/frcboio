@@ -20,8 +20,6 @@ class DMHandler(private val twitter: Twitter, private val owner: String) {
     private val executor = Executors.newSingleThreadScheduledExecutor()
 
     fun start() {
-        println("Started listening for DMs")
-
         executor.scheduleAtFixedRate({
             try {
                 val dms = twitter.directMessages().directMessages
