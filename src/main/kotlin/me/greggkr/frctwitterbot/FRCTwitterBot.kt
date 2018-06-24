@@ -158,12 +158,19 @@ class FRCTwitterBot {
             val hour = info.hour
             val min = info.minute
             scheduler.scheduleAtFixedRate({
+                val team = it.key
+
+                val teamStopwatch = Stopwatch.createUnstarted()
+
                 val status = StatusUpdate(getRandomFlavorText(info))
 
-                val image = getRandomImage(Pair(it.key, info))
+                teamStopwatch.start()
+                val image = getRandomImage(Pair(team, info))
+                teamStopwatch.stop()
+                info("Got random image in $teamStopwatch")
 
                 if (image == null) {
-                    println("Failed to get image for team ${it.key}")
+                    println("Failed to get image for team $team")
                 } else {
                     status.setMedia(image)
 
@@ -173,10 +180,22 @@ class FRCTwitterBot {
                     }, 1, TimeUnit.MINUTES)
                 }
 
-                val update = twitter.updateStatus(status)
-                twitter.createFavorite(update.id)
 
-                info("Sent Tweet for ${it.key}")
+                teamStopwatch
+                        .reset()
+                        .start()
+                val update = twitter.updateStatus(status)
+                teamStopwatch.stop()
+                info("Updated status for $team in $teamStopwatch")
+
+                teamStopwatch
+                        .reset()
+                        .start()
+                twitter.createFavorite(update.id)
+                info("Liked status for $team in $teamStopwatch")
+                teamStopwatch.stop()
+
+                info("Sent Tweet for $team")
             }, getDelay(hour, min, timezone = info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
         }
         info("Finished setting up schedulers in $stopwatch")
