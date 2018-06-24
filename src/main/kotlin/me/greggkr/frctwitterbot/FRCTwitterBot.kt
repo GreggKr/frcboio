@@ -1,5 +1,6 @@
 package me.greggkr.frctwitterbot
 
+import com.google.common.base.Stopwatch
 import com.natpryce.konfig.ConfigurationProperties
 import me.greggkr.frctwitterbot.handler.DMHandler
 import me.greggkr.frctwitterbot.util.Config
@@ -150,6 +151,7 @@ class FRCTwitterBot {
     fun start() {
         info("Setting up schedulers...")
 
+        val stopwatch = Stopwatch.createStarted()
         teams.forEach {
             val info = it.value
 
@@ -174,14 +176,16 @@ class FRCTwitterBot {
                 val update = twitter.updateStatus(status)
                 twitter.createFavorite(update.id)
 
-                twitter.dmBotOwner("Sent Tweet for ${it.key}")
                 info("Sent Tweet for ${it.key}")
             }, getDelay(hour, min, timezone = info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
         }
-        info("Finished setting up schedulers")
+        info("Finished setting up schedulers in $stopwatch")
 
+        stopwatch.reset()
+        stopwatch.start()
         dmHandler.start()
-        info("Started DM handler")
+        info("Started DM handler in $stopwatch")
+        stopwatch.stop()
     }
 
     private fun getRandomImage(team: Pair<Int, TeamInfo>): File? {
@@ -208,7 +212,7 @@ class FRCTwitterBot {
         val zone = try {
             ZoneId.of(timezone)
         } catch (e: Exception) {
-            println("Failed for timezone of $timezone")
+            info("Failed to get timezone '$timezone'")
             ZoneId.of(GMT_M_6_00)
         }
 
