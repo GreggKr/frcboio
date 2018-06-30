@@ -18,7 +18,7 @@ data class TeamInfo(val twitter: String,
         if (hour != other.hour) return false
         if (minute != other.minute) return false
         if (timezone != other.timezone) return false
-        if (!Arrays.equals(images, other.images)) return false
+        if (!Arrays.deepEquals(images, other.images)) return false
 
         return true
     }

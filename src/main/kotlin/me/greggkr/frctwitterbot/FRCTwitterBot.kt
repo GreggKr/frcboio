@@ -41,7 +41,7 @@ private const val GMT_M_10_00 = "Pacific/Honolulu"
 val config = ConfigurationProperties.fromFile(File("config.properties"))
 
 class FRCTwitterBot {
-    private val logger = LoggerFactory.getLogger(this::class.java)
+    private val logger = LoggerFactory.getLogger(FRCTwitterBot::class.java)
 
     private val twitterConfig = ConfigurationBuilder()
             .setOAuthConsumerKey(config[Config.Twitter.consumerkey])
@@ -66,6 +66,7 @@ class FRCTwitterBot {
             .build()
 
     init {
+        val stopwatch = Stopwatch.createStarted()
         teams[111] = TeamInfo("111wildstang", 1, 11, images = arrayOf(
                 "https://i.ytimg.com/vi/ko9g-hTs4VE/maxresdefault.jpg",
                 "https://www.chiefdelphi.com/media/img/9eb/9eb5e39ea29029df55dd709a83168f06_l.jpg",
@@ -146,10 +147,13 @@ class FRCTwitterBot {
                 "https://i.pinimg.com/474x/8f/a6/4c/8fa64c84650d118258ea7cf748f3d58b--robotics-fame.jpg",
                 "https://i.imgur.com/tLyD2Vbh.jpg"
         ))
+
+        stopwatch.stop()
+        logger.info("Created teams in ${stopwatch}")
     }
 
     fun start() {
-        info("Setting up schedulers...")
+        logger.info("Setting up schedulers...")
 
         val stopwatch = Stopwatch.createStarted()
         teams.forEach {
@@ -167,7 +171,7 @@ class FRCTwitterBot {
                 teamStopwatch.start()
                 val image = getRandomImage(Pair(team, info))
                 teamStopwatch.stop()
-                info("Got random image in $teamStopwatch")
+                logger.info("Got random image in $teamStopwatch")
 
                 if (image == null) {
                     println("Failed to get image for team $team")
@@ -186,24 +190,24 @@ class FRCTwitterBot {
                         .start()
                 val update = twitter.updateStatus(status)
                 teamStopwatch.stop()
-                info("Updated status for $team in $teamStopwatch")
+                logger.info("Updated status for $team in $teamStopwatch")
 
                 teamStopwatch
                         .reset()
                         .start()
                 twitter.createFavorite(update.id)
-                info("Liked status for $team in $teamStopwatch")
+                logger.info("Liked status for $team in $teamStopwatch")
                 teamStopwatch.stop()
 
-                info("Sent Tweet for $team")
+                logger.info("Sent Tweet for $team")
             }, getDelay(hour, min, timezone = info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
         }
-        info("Finished setting up schedulers in $stopwatch")
+        logger.info("Finished setting up schedulers in $stopwatch")
 
         stopwatch.reset()
         stopwatch.start()
         dmHandler.start()
-        info("Started DM handler in $stopwatch")
+        logger.info("Started DM handler in $stopwatch")
         stopwatch.stop()
     }
 
@@ -231,7 +235,7 @@ class FRCTwitterBot {
         val zone = try {
             ZoneId.of(timezone)
         } catch (e: Exception) {
-            info("Failed to get timezone '$timezone'")
+            logger.info("Failed to get timezone '$timezone'")
             ZoneId.of(GMT_M_6_00)
         }
 
@@ -246,11 +250,6 @@ class FRCTwitterBot {
 
         val dir = Duration.between(now, next)
         return dir.seconds
-    }
-
-    private fun info(msg: String) {
-        println(msg)
-        logger.info(msg)
     }
 }
 
