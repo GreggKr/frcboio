@@ -153,6 +153,12 @@ class FRCTwitterBot {
                 "https://i.pinimg.com/474x/8f/a6/4c/8fa64c84650d118258ea7cf748f3d58b--robotics-fame.jpg",
                 "https://i.imgur.com/tLyD2Vbh.jpg"
         ))
+        teams[1425] = TeamInfo("frcteam1425", 14, 25, GMT_M_8_00, arrayOf(
+                "https://i.imgur.com/wKESkjS.jpg",
+                "https://i.imgur.com/VyHtf7V.jpg",
+                "https://i.imgur.com/xThekTo.jpg",
+                "https://i.imgur.com/ahp5T4J.jpg"
+        ))
 
         stopwatch.stop()
         logger.info("Created teams in ${stopwatch}")
