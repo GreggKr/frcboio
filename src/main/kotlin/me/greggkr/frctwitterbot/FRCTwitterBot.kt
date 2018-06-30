@@ -133,6 +133,12 @@ class FRCTwitterBot {
                 "https://www.chiefdelphi.com/media/img/c39/c39ebf0cd9b5f6a8a56a728ef503308c_l.jpg",
                 "https://s.hdnux.com/photos/53/00/04/11272461/5/920x920.jpg"
         ))
+        teams[847] = TeamInfo("PHRED847", 8, 47, GMT_M_8_00, arrayOf(
+                "https://i.imgur.com/81xG0SK.jpg",
+                "https://i.imgur.com/oC3gvYW.jpg",
+                "https://i.imgur.com/6VYk2FN.jpg",
+                "https://i.imgur.com/T066hf9.jpg"
+        ))
         teams[1011] = TeamInfo("crush1011", 10, 11, images = arrayOf(
                 "https://d2g8igdw686xgo.cloudfront.net/19890370_1493076853.2214.jpg",
                 "https://i.imgur.com/0s4BIlMh.jpg",
