@@ -19,5 +19,5 @@ fun getRandomFlavorText(team: TeamInfo): String {
 
     return rawText
             .replace(teamAcct, "@${team.twitter}")
-            .replace(time, "${team.hour}:${team.minute}")
+            .replace(time, "${team.hour}:${team.minute}${if (team.second != 0) ":${team.second}" else ""}")
 }
