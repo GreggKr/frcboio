@@ -159,9 +159,14 @@ class FRCTwitterBot {
                 "https://i.imgur.com/xThekTo.jpg",
                 "https://i.imgur.com/ahp5T4J.jpg"
         ))
+        teams[1902] = TeamInfo("FRCBacon1902", 19, 2, GMT_M_5_00, arrayOf(
+                "https://i.imgur.com/hpVHFGE.png",
+                "https://i.imgur.com/2BvLUaf.png",
+                "https://i.imgur.com/7M5hshz.png"
+        ))
 
         stopwatch.stop()
-        logger.info("Created teams in ${stopwatch}")
+        logger.info("Created teams in $stopwatch")
     }
 
     fun start() {

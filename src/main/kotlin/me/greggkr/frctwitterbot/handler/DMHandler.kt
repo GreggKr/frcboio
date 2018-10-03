@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit
 
 private const val STATS_DUMP = "stats"
 
-// TODO: Use Paging
 class DMHandler(private val twitter: Twitter, private val owner: String) {
     private lateinit var lastDMs: ResponseList<DirectMessage>
 
@@ -25,22 +24,19 @@ class DMHandler(private val twitter: Twitter, private val owner: String) {
                 val dms = twitter.directMessages().directMessages
 
                 if (::lastDMs.isInitialized && lastDMs != dms) {
-                    val new = dms.filter { !lastDMs.contains(it) }
+                    val new = dms.filter { !lastDMs.contains(it) && it.sender.screenName == owner }
 
                     for (dm in new) {
-                        println(dm.sender.screenName)
-                        if (dm.sender.screenName == owner) {
-                            val text = dm.text
+                        val text = dm.text
 
-                            when (text.toLowerCase()) {
-                                STATS_DUMP -> {
-                                    val json = JSONObject()
-                                            .put("OS", "test")
+                        when (text.toLowerCase()) {
+                            STATS_DUMP -> {
+                                val json = JSONObject()
+                                        .put("OS", "test")
 
-                                    val prettyJson = HttpUtil.hastebin(gson.toJson(json))
+                                val prettyJson = HttpUtil.hastebin(gson.toJson(json))
 
-                                    twitter.dmBotOwner("FRC Boio statistics: $prettyJson")
-                                }
+                                twitter.dmBotOwner("FRC Boio statistics: $prettyJson")
                             }
                         }
                     }
