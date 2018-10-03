@@ -127,6 +127,12 @@ class FRCTwitterBot {
                 "https://i.imgur.com/0edJv5j.jpg",
                 "https://i.imgur.com/ql37fL9.jpg"
         ))
+        teams[503] = TeamInfo("frogforce", 5, 3, GMT_M_5_00, arrayOf(
+                "https://i.imgur.com/wdp6MqS.jpg",
+                "https://i.imgur.com/pC0FCeM.jpg",
+                "https://i.imgur.com/WqyAeZO.jpg",
+                "https://i.imgur.com/aTpgT5G.jpg"
+        ))
         teams[624] = TeamInfo("frc624", 6, 24, images = arrayOf(
                 "http://team624.org/images/slideshow/BrimstoneSlide.jpg",
                 "http://dev.team624.org/images/slideshow/offseason-slide.jpg",
@@ -160,9 +166,9 @@ class FRCTwitterBot {
                 "https://i.imgur.com/ahp5T4J.jpg"
         ))
         teams[1902] = TeamInfo("FRCBacon1902", 19, 2, GMT_M_5_00, arrayOf(
-                "https://i.imgur.com/hpVHFGE.png",
-                "https://i.imgur.com/2BvLUaf.png",
-                "https://i.imgur.com/7M5hshz.png"
+                "https://i.imgur.com/hpVHFGE.jpg",
+                "https://i.imgur.com/2BvLUaf.jpg",
+                "https://i.imgur.com/7M5hshz.jpg"
         ))
 
         stopwatch.stop()
