@@ -54,7 +54,7 @@ class FRCTwitterBot {
     private val scheduler = Executors.newSingleThreadScheduledExecutor()
     private val teams = HashMap<Int, TeamInfo>()
 
-    private val dmHandler = DMHandler(twitter, config[Config.Bot.owner])
+//    private val dmHandler = DMHandler(twitter, config[Config.Bot.owner])
 
     private val httpClient = OkHttpClient.Builder()
             .addInterceptor {
@@ -239,12 +239,12 @@ class FRCTwitterBot {
             }, getDelay(hour, min, sec, info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
         }
         logger.info("Finished setting up schedulers in $stopwatch")
-
-        stopwatch.reset()
-        stopwatch.start()
-        dmHandler.start()
-        logger.info("Started DM handler in $stopwatch")
-        stopwatch.stop()
+//
+//        stopwatch.reset()
+//        stopwatch.start()
+//        dmHandler.start()
+//        logger.info("Started DM handler in $stopwatch")
+//        stopwatch.stop()
     }
 
     private fun getRandomImage(team: Pair<Int, TeamInfo>): File? {
