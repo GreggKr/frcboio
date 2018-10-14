@@ -2,7 +2,6 @@ package me.greggkr.frctwitterbot
 
 import com.google.common.base.Stopwatch
 import com.natpryce.konfig.ConfigurationProperties
-import me.greggkr.frctwitterbot.handler.DMHandler
 import me.greggkr.frctwitterbot.util.Config
 import me.greggkr.frctwitterbot.util.TeamInfo
 import me.greggkr.frctwitterbot.util.getRandomFlavorText
@@ -197,6 +196,10 @@ class FRCTwitterBot {
             val hour = info.hour
             val min = info.minute
             val sec = info.second
+
+            val delay = getDelay(hour, min, sec, info.timezone)
+            println("${it.key}: $delay")
+
             scheduler.scheduleAtFixedRate({
                 val team = it.key
 
@@ -236,10 +239,10 @@ class FRCTwitterBot {
                 teamStopwatch.stop()
 
                 logger.info("Sent Tweet for $team")
-            }, getDelay(hour, min, sec, info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
+            }, delay, 12 * 60 * 60, TimeUnit.SECONDS)
         }
         logger.info("Finished setting up schedulers in $stopwatch")
-//
+
 //        stopwatch.reset()
 //        stopwatch.start()
 //        dmHandler.start()
@@ -285,6 +288,7 @@ class FRCTwitterBot {
         if (now > next) next = next.plusDays(1)
 
         val dir = Duration.between(now, next)
+
         return dir.seconds
     }
 }
