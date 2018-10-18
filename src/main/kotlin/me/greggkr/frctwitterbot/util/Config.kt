@@ -12,8 +12,4 @@ class Config {
         val accesstoken by stringType
         val accesstokensecret by stringType
     }
-
-    object Bot : PropertyGroup() {
-        val owner by stringType
-    }
 }
