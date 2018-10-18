@@ -1,12 +1,10 @@
 package me.greggkr.frctwitterbot
 
-import com.google.common.base.Stopwatch
 import com.natpryce.konfig.ConfigurationProperties
 import me.greggkr.frctwitterbot.util.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import twitter4j.StatusUpdate
-import twitter4j.Twitter
 import twitter4j.TwitterFactory
 import twitter4j.conf.ConfigurationBuilder
 import java.io.File
@@ -55,9 +53,6 @@ class FRCTwitterBot {
             .build()
 
     fun start() {
-        println("Setting up schedulers...")
-
-        val stopwatch = Stopwatch.createStarted()
         teams.forEach {
             val info = it.value
 
@@ -82,7 +77,7 @@ class FRCTwitterBot {
                 println("Tweeted for $team")
             }, getDelay(info.hour, info.minute, info.second, info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
         }
-        println("Finished setting up schedulers in $stopwatch")
+        println("Scheduled")
     }
 
     private fun getRandomImage(team: Pair<Int, TeamInfo>): File? {

@@ -14,7 +14,7 @@ plugins {
 }
 
 group = 'me.greggkr.frctwitterbot'
-version = '1.1.5'
+version = '1.2.1'
 
 apply plugin: 'kotlin'
 
@@ -27,16 +27,8 @@ dependencies {
     compile 'org.jetbrains.kotlin:kotlin-reflect:1.2.50'
 
     compile 'org.twitter4j:twitter4j-core:4.0.4'
-
     compile 'com.natpryce:konfig:1.6.9.0'
-
-    compile 'ch.qos.logback:logback-classic:1.2.3'
-
-    compile 'commons-io:commons-io:2.6'
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
-    compile 'com.google.guava:guava:25.1-jre'
-
-    compile 'org.json:json:20090211'
     compile 'com.google.code.gson:gson:2.8.5'
 }
 

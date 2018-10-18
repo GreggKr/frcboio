@@ -1,10 +1,10 @@
 package me.greggkr.frctwitterbot.util
 
+import com.google.gson.JsonParser
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
-import org.json.JSONObject
 
 private const val URL = "https://hastebin.com"
 
@@ -21,6 +21,7 @@ object HttpUtil {
                 .body()
                 ?.string()
 
-        return "$URL/${JSONObject(data)["key"]}"
+        val parsed = JsonParser().parse(data).asJsonObject
+        return "$URL/${parsed["key"]}"
     }
 }
