@@ -18,6 +18,8 @@ version = '1.2.1'
 
 apply plugin: 'kotlin'
 
+project.buildDir = 'heroku'
+
 repositories {
     mavenCentral()
 }
@@ -33,10 +35,15 @@ dependencies {
 }
 
 jar {
+    archiveName = 'FRCTwitterBot-REG.jar'
     manifest {
         attributes 'Main-Class': 'me.greggkr.frctwitterbot.FRCTwitterBotKt',
                 'Implementation-Version': project.version
     }
+}
+
+shadowJar {
+    archiveName = 'FRCTwitterBot.jar'
 }
 
 compileKotlin {
