@@ -24,7 +24,7 @@ repositories {
     mavenCentral()
 }
 
-task stage(dependsOn: ['build', 'clean', 'shadow'])
+task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
 
 dependencies {
