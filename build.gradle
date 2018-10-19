@@ -24,6 +24,9 @@ repositories {
     mavenCentral()
 }
 
+task stage(dependsOn: ['build', 'clean', 'shadow'])
+build.mustRunAfter clean
+
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile 'org.jetbrains.kotlin:kotlin-reflect:1.2.50'
