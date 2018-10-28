@@ -18,14 +18,9 @@ version = '1.2.1'
 
 apply plugin: 'kotlin'
 
-project.buildDir = 'heroku'
-
 repositories {
     mavenCentral()
 }
-
-task stage(dependsOn: ['build', 'clean'])
-build.mustRunAfter clean
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
@@ -35,18 +30,6 @@ dependencies {
     compile 'com.natpryce:konfig:1.6.9.0'
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
     compile 'com.google.code.gson:gson:2.8.5'
-}
-
-jar {
-    archiveName = 'FRCTwitterBot-REG.jar'
-    manifest {
-        attributes 'Main-Class': 'me.greggkr.frctwitterbot.FRCTwitterBotKt',
-                'Implementation-Version': project.version
-    }
-}
-
-shadowJar {
-    archiveName = 'FRCTwitterBot.jar'
 }
 
 compileKotlin {
