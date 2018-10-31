@@ -16,18 +16,6 @@ import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-/*
-
-Timezone constants.
-Format: GMT_M/P_HOUR_MIN
-
-Examples: GMT_M_6_00 = GMT-6:00
-          GMT_P_6_00 = GMT+6:00
-
-
- */
-
-
 private val cacheFolder = File("img_cache/")
 
 val config = ConfigurationProperties.fromFile(File("config.properties"))
@@ -77,7 +65,6 @@ class FRCTwitterBot {
                 println("Tweeted for $team")
             }, getDelay(info.hour, info.minute, info.second, info.timezone), 12 * 60 * 60, TimeUnit.SECONDS)
         }
-        println("Scheduled")
     }
 
     private fun getRandomImage(team: Pair<Int, TeamInfo>): File? {
